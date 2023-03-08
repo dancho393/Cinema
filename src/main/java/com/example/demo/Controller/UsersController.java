@@ -7,8 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
+
 public class UsersController {
     private final UserRepository userRepository;
 
@@ -18,7 +22,19 @@ public class UsersController {
     @GetMapping
     public ResponseEntity getAllUsers() {
 
+
         return  ResponseEntity.ok(this.userRepository.findAll());
+    }
+
+    @GetMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity getUserByUsernameAndPassword(@RequestParam("username") String username,
+                                                       @RequestParam("password") String password) {
+        Users user = this.userRepository.findByUsernameAndPassword(username,password);
+        if (user == null) {
+           return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(user);
     }
     @GetMapping("/{id}")
     public Users getUser(@PathVariable Long id) {
@@ -26,8 +42,17 @@ public class UsersController {
         return  userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
+        List<Users> users = this.userRepository.findAll();
+        for(Users u:users)
+        {
+            if(u.getUsername().compareToIgnoreCase(user.getUsername())==0)
+            {
+                return ResponseEntity.badRequest().build();
+            }
+        }
         Users savedUser = this.userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
