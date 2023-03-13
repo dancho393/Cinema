@@ -22,4 +22,6 @@ public class Seats {
     private Integer free;
     @Column(name = "seat_movie")
     private Integer movie;
+    @Column(name = "seat_userid")
+    private int user;
 }
