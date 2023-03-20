@@ -18,6 +18,7 @@ public class MoviesController {
         this.moviesService = moviesService;
     }
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Movies>> getAllMovies () {
         List<Movies> movies = moviesService.getAllMovies();
         return ResponseEntity.ok(movies);
@@ -25,6 +26,7 @@ public class MoviesController {
 
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Movies> getMovie(@PathVariable Long id)
     {
         Movies movie= moviesService.getMovie(id);
