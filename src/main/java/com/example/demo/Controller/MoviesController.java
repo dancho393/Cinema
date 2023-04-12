@@ -24,16 +24,11 @@ public class MoviesController {
         return ResponseEntity.ok(movies);
     }
 
-
-    @GetMapping("/{id}")
+    @GetMapping("/{title}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Movies> getMovie(@PathVariable Long id)
+    public ResponseEntity<List<Movies>> getMovie(@PathVariable String title)
     {
-        Movies movie= moviesService.getMovie(id);
-        if (movie == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(movie);
+        return  ResponseEntity.ok(moviesService.getMoviesByTitle(title));
 
     }
 

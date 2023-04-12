@@ -15,13 +15,13 @@ public class Seats {
     @Column(name = "seat_id")
     private long id;
     @Column(name = "seat_column")
-    private  Integer column;
+    private  Long column;
     @Column(name = "seat_row")
-    private Integer row;
+    private Long row;
     @Column(name = "seat_free")
-    private Integer free;
+    private Long free;
     @Column(name = "seat_movie")
-    private Integer movie;
+    private Long movie;
     @Column(name = "seat_userid")
-    private int user;
+    private Long user;
 }
