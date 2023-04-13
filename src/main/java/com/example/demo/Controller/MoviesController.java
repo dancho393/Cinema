@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -31,8 +33,16 @@ public class MoviesController {
         return  ResponseEntity.ok(moviesService.getMoviesByTitle(title));
 
     }
+    @GetMapping("/byHour")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Movies> MyGetter(@RequestParam("hour") LocalTime hour,@RequestParam("name")String name,@RequestParam("date") Timestamp date)
+    {
+
+        return ResponseEntity.ok(moviesService.getMoviebyHourAndDate(hour,name,date));
+    }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Movies> createMovie(@RequestBody Movies movie) {
         Movies savedMovie = moviesService.createMovie(movie);
         if (savedMovie == null) {

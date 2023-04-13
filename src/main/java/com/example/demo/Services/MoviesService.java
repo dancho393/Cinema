@@ -4,9 +4,14 @@ import com.example.demo.CinemaRelated.Movies;
 import com.example.demo.Repository.MovieRepository;
 import com.example.demo.Repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MoviesService {
@@ -30,6 +35,17 @@ public class MoviesService {
     public Movies createMovie(Movies movie) {
 
         return movieRepository.save(movie);
+    }
+    public Movies getMoviebyHourAndDate(LocalTime hour, String name, Timestamp date){
+        Movies movie = movieRepository.findByHour(hour,name,date);
+
+        if (movie == null) {
+            return null;
+        }
+
+        return movie;
+
+
     }
 
     public List<Movies> getMoviesByTitle(String title) {

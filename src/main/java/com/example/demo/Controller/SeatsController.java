@@ -2,9 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Services.SeatService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/seats")
@@ -21,9 +19,14 @@ public class SeatsController {
         return  ResponseEntity.ok(this.seatService.getAllSeats());
     }
 
-    public ResponseEntity getAllSeatsForMovie(){
-        //return seatService.getAllSeatsForMovie();
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity getAllSeatsForMovie(@PathVariable Long id){
+        return ResponseEntity.ok(seatService.getAllSeatsForMovie(id));
+
+    }
+    @PostMapping
+    public ResponseEntity create32Seats(Long id){
+      return  null;
     }
 }
 
