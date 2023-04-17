@@ -35,7 +35,9 @@ public class MoviesController {
     }
     @GetMapping("/byHour")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Movies> MyGetter(@RequestParam("hour") LocalTime hour,@RequestParam("name")String name,@RequestParam("date") Timestamp date)
+    public ResponseEntity<Movies> MyGetter(@RequestParam("hour") LocalTime hour,
+                                           @RequestParam("name")String name,
+                                           @RequestParam("date") Timestamp date)
     {
 
         return ResponseEntity.ok(moviesService.getMoviebyHourAndDate(hour,name,date));

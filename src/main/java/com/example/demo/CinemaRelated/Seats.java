@@ -1,9 +1,6 @@
 package com.example.demo.CinemaRelated;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import lombok.Data;
 
@@ -12,6 +9,7 @@ import lombok.Data;
 @Table(name = "seats", schema = "cinema")
 public class Seats {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
     private long id;
     @Column(name = "seat_column")
