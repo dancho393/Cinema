@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.CinemaRelated.CurrentUser;
 import com.example.demo.CinemaRelated.Users;
 
 import com.example.demo.Services.UsersService;
@@ -21,6 +22,7 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {
         List<Users> users = usersService.getAllUsers();
@@ -35,9 +37,10 @@ public class UsersController {
         if (user == null) {
             return ResponseEntity.badRequest().build();
         }
+        CurrentUser.setCurrentUser(user);
         return ResponseEntity.ok(user);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public ResponseEntity<Users> getUser(@PathVariable Long id) {
         Users user = usersService.getUser(id);
@@ -65,6 +68,13 @@ public class UsersController {
         }
         usersService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/currentUser")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Users> getCurrentUser(){
+        return ResponseEntity.ok(CurrentUser.getCurrentUser());
     }
 
 

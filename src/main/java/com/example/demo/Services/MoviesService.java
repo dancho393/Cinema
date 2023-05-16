@@ -25,6 +25,8 @@ public class MoviesService {
     }
 
     public List<Movies> getAllMovies() {
+        //List<Movies> moviess=movieRepository.findAll();
+
         return movieRepository.findAll();
     }
 
@@ -56,6 +58,13 @@ public class MoviesService {
                movies.remove(m);
        return movies;
 
+    }
+    public List getRealMovies(){
+        List movies=movieRepository.getRealMovies();
+        return movies;
+    }
+    public List SearchBar(String contains){
+        return movieRepository.getSearchedMovies(contains);
     }
 }
 

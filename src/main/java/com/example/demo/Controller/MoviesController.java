@@ -1,6 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.CinemaRelated.CurrentUser;
 import com.example.demo.CinemaRelated.Movies;
+import com.example.demo.CinemaRelated.Seats;
+import com.example.demo.CinemaRelated.SelectedSeats;
 import com.example.demo.Services.MoviesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,14 +29,15 @@ public class MoviesController {
         return ResponseEntity.ok(movies);
     }
 
-    @GetMapping("/{title}")
+    //Search Bar
+    @GetMapping("/search")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<List<Movies>> getMovie(@PathVariable String title)
+    public ResponseEntity<List<Movies>> getMovie(@RequestParam("contains") String title)
     {
-        return  ResponseEntity.ok(moviesService.getMoviesByTitle(title));
+        return  ResponseEntity.ok(moviesService.SearchBar(title));
 
     }
-    @GetMapping("/byHour")
+    @GetMapping("/byTime")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Movies> MyGetter(@RequestParam("hour") LocalTime hour,
                                            @RequestParam("name")String name,
@@ -50,6 +54,16 @@ public class MoviesController {
         if (savedMovie == null) {
             return ResponseEntity.badRequest().build();
         }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
+    @GetMapping("/real")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity realMovies(){
+        SelectedSeats.setSelectedSeats(null);
+        SelectedSeats.setSeats(null);
+        return ResponseEntity.status(HttpStatus.FOUND).body(moviesService.getRealMovies());
+    }
+
+
 }
